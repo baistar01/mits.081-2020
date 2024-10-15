@@ -49,7 +49,24 @@ sys_sbrk(void)
   addr = myproc()->sz;
   // if(growproc(n) < 0)
   //  return -1;
-  myproc()->sz += n;
+  uint64 sz = myproc()->sz;
+  if (n > 0)
+  {
+    sz += n;
+  }
+  else
+  {
+    if (sz + n < 0)
+    {
+      return -1;
+    }
+    else
+    {
+      // 处理sbrk参数小于0的情况
+      sz = uvmdealloc(myproc()->pagetable, sz, sz + n);
+    }
+  }
+  myproc()->sz = sz;
   return addr;
 }
 

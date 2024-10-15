@@ -269,6 +269,11 @@ int is_lazy_alloc_va(uint64 va)
   {
     return 0;
   }
+  // 处理保护页
+  if (va < PGROUNDDOWN(p->trapframe->sp) && va >= PGROUNDDOWN(p->trapframe->sp) - PGSIZE)
+  {
+    return 0;
+  }
   return 1;
 }
 

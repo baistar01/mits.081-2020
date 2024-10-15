@@ -79,6 +79,11 @@ void usertrap(void)
         p->killed = 1;
       }
     }
+    else
+    {
+      printf("用户进程正在访问一个非法的地址\n");
+      p->killed = 1;
+    }
   }
   else
   {
