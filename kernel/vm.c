@@ -334,10 +334,6 @@ int uvmcopy(pagetable_t old, pagetable_t new, uint64 sz)
       flags = (flags | PTE_COW) & ~PTE_W;
       *pte = PA2PTE(pa) | flags;
     }
-
-    // if ((mem = kalloc()) == 0)
-    // goto err;
-    // memmove(mem, (char *)pa, PGSIZE);
     if (mappages(new, i, PGSIZE, (uint64)pa, flags) != 0)
     {
       uvmunmap(new, 0, i / PGSIZE, 1);
